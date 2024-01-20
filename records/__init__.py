@@ -10,7 +10,7 @@ def create_app(config_file='settings.py'):
     app.config.from_pyfile(config_file)
     db.init_app(app)
 
-    from .models import Author, Genre, Song
+    from .models import User, Ticker
     from .api import api
 
     app.register_blueprint(api, url_prefix='/')

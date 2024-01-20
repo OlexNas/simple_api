@@ -1,21 +1,25 @@
 from. extensions import db
 
 
-class Author(db.Model):
+
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
+    tickers = db.relationship('Ticker')
 
+    @classmethod
+    def from_dict(cls, data):
+        return User(
+            name = data['name']
+        )
 
-class Song(db.Model):
+    def __repr__(self):
+        return f"User {self.name}"
+
+class Ticker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50))
-    description = db.Column(db.Text)
-    published_date = db.Column(db.DateTime)
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
-    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
+    name = db.Column(db.String(18))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
-class Genre(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
 
